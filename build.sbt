@@ -66,7 +66,11 @@ lazy val bench = Project("bench", file("modules/bench"))
   .settings(noPublishSettings)
   .settings(
     libraryDependencies ++= Seq(
-      ),
+      "org.tpolecat" %% "doobie-postgres" % doobieVersion,
+      "org.tpolecat" %% "doobie-postgres-circe" % doobieVersion,
+      "org.tpolecat" %% "doobie-hikari" % doobieVersion,
+      "org.tpolecat" %% "skunk-core" % "0.0.14",
+    ),
   )
 
 lazy val docs = project

@@ -1,5 +1,8 @@
 package doobierolltest
-import java.io.{File, PrintWriter}
+
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+import java.nio.file.Paths
 
 import doobierolltest.TestDataHelpers._
 import doobierolltest.model.Wrapper
@@ -17,10 +20,8 @@ object GenerateTestData extends App {
       .map(_.flatten)
       .provideLayer(zio.test.environment.testEnvironment)
       .map { c =>
-        println(c.length)
-        val pw = new PrintWriter(new File("testdata.json"))
-        pw.write(c.asJson.spaces2)
-        pw.close()
+        val bytes = c.asJson.spaces2.getBytes(StandardCharsets.UTF_8)
+        Files.write(Paths.get("testdata.json"), bytes)
       }.as(ExitCode.success)
 
 }
